@@ -28,7 +28,7 @@ def send_queue_info(port,qg,action,counter):
     statsd_socket.sendto(msg,STATSD_SERVER)
 
 while True:
-    output = cisco.CLI(queue_command).get_output()
+    output = cisco.CLI(queue_command, False).get_output()
 #    output = output.get_output()
     for line in output:
         if interface_name.match(line):
