@@ -22,7 +22,7 @@ def send_queue_info(port,qg,action,counter):
     port = port.replace('/','-')
     #TODO: replace + with join()[if possible]
     port = 'Ethernet' + port
-    msg = hostname + '-' + port + '-qg' + qg + '-' + action
+    msg = hostname + '.' + port + '-qg' + qg + '-' + action
     #statsd gauge
     msg = msg+':'+counter+'|g'
     statsd_socket.sendto(msg,STATSD_SERVER)
