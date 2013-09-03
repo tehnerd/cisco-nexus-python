@@ -4,6 +4,7 @@ import sys
 import cisco
 import time
 import re
+from string import join
 
 STATSD_SERVER_IP = sys.argv[1]
 STATSD_PORT = 8125
@@ -20,11 +21,10 @@ pkt_discard = re.compile(".*?Pkts discarded on ingress               : (\d+).*?"
 
 def send_queue_info(port,qg,action,counter):
     port = port.replace('/','-')
-    #TODO: replace + with join()[if possible]
     port = 'Ethernet' + port
-    msg = hostname + '.' + port + '-qg' + qg + '-' + action
     #statsd gauge
-    msg = msg+':'+counter+'|g'
+    msg = (hostname,'.',port,'-qg',qg,'-',action,':',counter,'|g')
+    msg = join(msg,sep='')
     statsd_socket.sendto(msg,STATSD_SERVER)
 
 while True:
