@@ -6,12 +6,14 @@ import time
 import re
 from string import join
 
+SRC_ADDR = ('0.0.0.0',1165)
 STATSD_SERVER_IP = sys.argv[1]
 STATSD_PORT = 8125
 STATSD_SERVER = (STATSD_SERVER_IP,STATSD_PORT)
 
 hostname = socket.gethostname()
 statsd_socket = cisco.CiscoSocket(socket.AF_INET,socket.SOCK_DGRAM)
+statsd_socket.bind(SRC_ADDR)
 queue_command = "show queuing interface"
 interface_name = re.compile("^Ethernet(\d{1}/\d{1,2}).*")
 qos_group = re.compile(".*?qos-group (\d{1}).*?")
